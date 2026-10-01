@@ -1,211 +1,63 @@
-# Polynomial Interpolation Methods
+# Polynomial Interpolation
 
-A Python implementation and visualization of classical polynomial interpolation methods, developed as part of the **Mathematical Foundations for AI** coursework.
+A small Python project that shows three interpolation methods and the Runge phenomenon.
+Made for the **Mathematical Foundations for AI** course.
 
-The project implements three interpolation techniques:
+## What it does
 
-* Newton interpolation
-* Lagrange interpolation
-* Hermite interpolation
+Interpolation means finding a polynomial that goes through a set of known points.
 
-It also includes a visualization of the **Runge phenomenon**, which illustrates the oscillations that can appear when using high-degree polynomial interpolation with equally spaced points.
+The project includes:
 
-## 📌 Project Overview
+* **Newton** interpolation (uses divided differences)
+* **Lagrange** interpolation (builds the polynomial directly from the points)
+* **Hermite** interpolation (uses the points and their slopes)
+* A demo of the **Runge phenomenon**
 
-Polynomial interpolation is a numerical method used to approximate a function from a finite set of known data points.
+Each method is shown on a graph and compared with the original function.
 
-Given a set of points
+## Runge phenomenon
 
-$$
-(x_0,y_0), (x_1,y_1), \ldots, (x_n,y_n)
-$$
+If you use many equally spaced points with one high-degree polynomial, the curve can
+oscillate a lot near the ends of the interval. More points does not always mean a better result.
 
-the objective is to construct a polynomial \(P(x)\) such that:
+Using **Chebyshev points** or **piecewise interpolation** helps avoid this problem.
 
-$$
-P(x_i)=y_i
-$$
-
-for all interpolation points.
-
-This project provides implementations of different interpolation approaches and visualizes their behavior using Python and Matplotlib.
-
-## 🧮 Implemented Methods
-
-### 1. Newton Interpolation
-
-Newton interpolation constructs the interpolation polynomial using divided differences.
-
-The polynomial has the form:
-
-$$
-P(x)=a_0+a_1(x-x_0)+a_2(x-x_0)(x-x_1)+\cdots
-$$
-
-The implementation computes the divided-difference table and evaluates the resulting polynomial at any given point.
-
-### 2. Lagrange Interpolation
-
-The Lagrange interpolation polynomial is defined by:
-
-$$
-P(x)=\sum_{i=0}^{n}y_iL_i(x)
-$$
-
-where:
-
-$$
-L_i(x)=\prod_{\substack{j=0\\j\neq i}}^n
-\frac{x-x_j}{x_i-x_j}
-$$
-
-This method directly constructs the polynomial from the interpolation points.
-
-### 3. Hermite Interpolation
-
-Hermite interpolation extends polynomial interpolation by using both function values and derivative values.
-
-For each interpolation point \(x_i\), the following information can be provided:
-
-$$
-f(x_i), \qquad f'(x_i)
-$$
-
-This allows the interpolation polynomial to match not only the function values but also the derivatives at the interpolation points.
-
-## 📊 Visualizations
-
-The project generates visualizations comparing:
-
-* The original function
-* Interpolation points
-* Newton interpolation
-* Lagrange interpolation
-* Hermite interpolation
-
-The project also demonstrates the **Runge phenomenon**.
-
-### Runge Phenomenon
-
-The Runge phenomenon occurs when a high-degree polynomial is used to interpolate a function at equally spaced points.
-
-A classical example is the Runge function:
-
-$$
-f(x)=\frac{1}{1+25x^2}, \qquad x\in[-1,1]
-$$
-
-When the number of equally spaced interpolation points increases, significant oscillations can appear, particularly near the boundaries of the interval.
-
-This phenomenon demonstrates an important limitation of high-degree polynomial interpolation.
-
-## 🛠️ Technologies
-
-* **Python 3**
-* **NumPy**
-* **Matplotlib**
-
-## 📁 Project Structure
+## Files
 
 ```text
 Interpolation/
-│
-├── newton.py          # Newton interpolation implementation
-├── lagrange.py        # Lagrange interpolation implementation
-├── hermite.py         # Hermite interpolation implementation
-├── main.py            # Main program and visualizations
-├── requirements.txt   # Python dependencies
-└── README.md          # Project documentation
+├── newton.py          # Newton interpolation
+├── lagrange.py        # Lagrange interpolation
+├── hermite.py         # Hermite interpolation
+├── main.py            # Runs everything and shows the graphs
+├── requirements.txt   # Python packages needed
+└── README.md
 ```
 
-## ⚙️ Installation
+## How to run
 
-### 1. Clone the repository
+1. Download the project and open a terminal in its folder:
 
-```bash
-git clone https://github.com/YOUR_USERNAME/Interpolation.git
-```
+   ```bash
+   git clone https://github.com/YOUR_USERNAME/Interpolation.git
+   cd Interpolation
+   ```
 
-### 2. Move into the project directory
+2. Install the packages (`numpy` and `matplotlib`):
 
-```bash
-cd Interpolation
-```
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-### 3. Create a virtual environment
+3. Run the program:
 
-Windows:
+   ```bash
+   python main.py
+   ```
 
-```bash
-python -m venv venv
-```
+## Author
 
-Activate it:
+**Otmane Belkhair**, Master's student at INPT
 
-```bash
-venv\Scripts\activate
-```
-
-Linux/macOS:
-
-```bash
-python3 -m venv venv
-source venv/bin/activate
-```
-
-### 4. Install dependencies
-
-```bash
-pip install -r requirements.txt
-```
-
-## ▶️ Running the Project
-
-Run the main Python file:
-
-```bash
-python main.py
-```
-
-The program will execute the interpolation methods and display the corresponding visualizations.
-
-## 📦 Dependencies
-
-The project requires:
-
-```text
-numpy
-matplotlib
-```
-
-These dependencies are listed in `requirements.txt`.
-
-## 🎯 Learning Objectives
-
-This project aims to provide practical understanding of:
-
-* Polynomial interpolation
-* Divided differences
-* Newton interpolation
-* Lagrange interpolation
-* Hermite interpolation
-* Numerical approximation
-* Polynomial evaluation
-* Data visualization with Matplotlib
-* Numerical instability and the Runge phenomenon
-
-## 🔬 Numerical Analysis Considerations
-
-Although increasing the number of interpolation points may appear to improve the approximation, high-degree polynomial interpolation can introduce numerical problems.
-
-The Runge phenomenon is an important example of this behavior. In practice, alternative approaches such as **piecewise interpolation** or **Chebyshev nodes** can provide more stable approximations.
-
-## 👨‍💻 Author
-
-**Otmane Belkhair**
-
-Master's Student — INPT
-
-## 📄 License
-
-This project is intended for educational and academic purposes.
+For educational use.
