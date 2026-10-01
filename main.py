@@ -3,173 +3,61 @@ import matplotlib.pyplot as plt
 
 from newton import newton_interpolation
 from lagrange import lagrange_interpolation
-from hermite import hermite_interpolation
 
 
-# ==========================================
-# Original function
-# ==========================================
-
+# Runge's function used across the whole file
 def f(x):
-    return x**2 + 2*x + 1
+    return 1 / (1 + 25 * x**2)
 
 
-# Derivative
-def df(x):
-    return 2*x + 2
-
-
-# ==========================================
-# Data
-# ==========================================
-
-# Newton and Lagrange
-x = [0, 1, 2, 3, 4, 5, 6, 7, 8]
-y = [f(xi) for xi in x]
-
-# Hermite
-x_h = [0 ,1, 2]
-y_h = [f(xi) for xi in x_h]
-dy_h = [df(xi) for xi in x_h]
-
-
-# ==========================================
-# Plot values
-# ==========================================
-
-x_plot = np.linspace(-1, 10, 200)
-
-# Original function
+# Dense grid for plotting the original function and evaluations
+x_plot = np.linspace(-1, 1, 500)
 y_original = [f(xi) for xi in x_plot]
 
 
-# ==========================================
-# Newton
-# ==========================================
+# ==============================================================================
+# 1. BEFORE: Low degree polynomial (5 points) -> Smooth approximation
+# ==============================================================================
+x_5 = np.linspace(-1, 1, 5)
+y_5 = [f(xi) for xi in x_5]
 
-y_newton = [
-    newton_interpolation(x, y, xi)[0]
-    for xi in x_plot
-]
+y_newton_5 = [newton_interpolation(x_5, y_5, xi)[0] for xi in x_plot]
+y_lagrange_5 = [lagrange_interpolation(x_5, y_5, xi) for xi in x_plot]
 
+plt.figure(figsize=(9, 5))
+plt.plot(x_plot, y_original, "k-", label="Original f(x)", linewidth=2)
+plt.plot(x_plot, y_newton_5, "r--", label="Newton (5 points)")
+plt.plot(x_plot, y_lagrange_5, "b:", label="Lagrange (5 points)")
+plt.scatter(x_5, y_5, color="black", label="Nodes (N=5)", zorder=5)
 
-# ==========================================
-# Lagrange
-# ==========================================
-
-y_lagrange = [
-    lagrange_interpolation(x, y, xi)
-    for xi in x_plot
-]
-
-
-# ==========================================
-# Hermite
-# ==========================================
-
-y_hermite = [
-    hermite_interpolation(x_h, y_h, dy_h, xi)
-    for xi in x_plot
-]
-
-
-# ==========================================
-# Newton visualization
-# ==========================================
-
-plt.figure(figsize=(8, 5))
-
-plt.plot(
-    x_plot,
-    y_original,
-    label="Original f(x)"
-)
-
-plt.plot(
-    x_plot,
-    y_newton,
-    "--",
-    label="Newton interpolation"
-)
-
-plt.scatter(
-    x,
-    y,
-    label="Interpolation points"
-)
-
-plt.title("Newton Interpolation")
+plt.title("BEFORE: 5 Interpolation Points (Smooth, low error)")
 plt.xlabel("x")
 plt.ylabel("f(x)")
+plt.ylim(-0.5, 1.5)
 plt.grid(True)
 plt.legend()
-
 plt.show()
 
 
-# ==========================================
-# Lagrange visualization
-# ==========================================
+# ==============================================================================
+# 2. AFTER: High degree polynomial (11 points) -> Runge's Phenomenon
+# ==============================================================================
+x_11 = np.linspace(-1, 1, 11)
+y_11 = [f(xi) for xi in x_11]
 
-plt.figure(figsize=(8, 5))
+y_newton_11 = [newton_interpolation(x_11, y_11, xi)[0] for xi in x_plot]
+y_lagrange_11 = [lagrange_interpolation(x_11, y_11, xi) for xi in x_plot]
 
-plt.plot(
-    x_plot,
-    y_original,
-    label="Original f(x)"
-)
+plt.figure(figsize=(9, 5))
+plt.plot(x_plot, y_original, "k-", label="Original f(x)", linewidth=2)
+plt.plot(x_plot, y_newton_11, "r--", label="Newton (11 points)")
+plt.plot(x_plot, y_lagrange_11, "b:", label="Lagrange (11 points)")
+plt.scatter(x_11, y_11, color="red", label="Nodes (N=11)", zorder=5)
 
-plt.plot(
-    x_plot,
-    y_lagrange,
-    "--",
-    label="Lagrange interpolation"
-)
-
-plt.scatter(
-    x,
-    y,
-    label="Interpolation points"
-)
-
-plt.title("Lagrange Interpolation")
+plt.title("AFTER: 11 Interpolation Points (Runge Phenomenon Edge Oscillations)")
 plt.xlabel("x")
 plt.ylabel("f(x)")
+plt.ylim(-0.5, 1.5)  # Constrained to see the blowup at boundaries
 plt.grid(True)
 plt.legend()
-
-plt.show()
-
-
-# ==========================================
-# Hermite visualization
-# ==========================================
-
-plt.figure(figsize=(8, 5))
-
-plt.plot(
-    x_plot,
-    y_original,
-    label="Original f(x)"
-)
-
-plt.plot(
-    x_plot,
-    y_hermite,
-    "--",
-    label="Hermite interpolation"
-)
-
-plt.scatter(
-    x_h,
-    y_h,
-    label="Interpolation points"
-)
-
-plt.title("Hermite Interpolation")
-plt.xlabel("x")
-plt.ylabel("f(x)")
-plt.grid(True)
-plt.legend()
-
 plt.show()

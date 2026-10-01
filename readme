@@ -11,7 +11,6 @@ The project includes:
 
 * **Newton** interpolation (uses divided differences)
 * **Lagrange** interpolation (builds the polynomial directly from the points)
-* **Hermite** interpolation (uses the points and their slopes)
 * A demo of the **Runge phenomenon**
 
 Each method is shown on a graph and compared with the original function.
@@ -21,43 +20,19 @@ Each method is shown on a graph and compared with the original function.
 If you use many equally spaced points with one high-degree polynomial, the curve can
 oscillate a lot near the ends of the interval. More points does not always mean a better result.
 
-Using **Chebyshev points** or **piecewise interpolation** helps avoid this problem.
-
 ## Files
 
 ```text
 Interpolation/
-├── newton.py          # Newton interpolation
-├── lagrange.py        # Lagrange interpolation
-├── hermite.py         # Hermite interpolation
-├── main.py            # Runs everything and shows the graphs
-├── requirements.txt   # Python packages needed
+├── newton.py                                # Newton interpolation
+├── lagrange.py                              # Lagrange interpolation
+├── main.py                                  # Runs everything and shows the graphs
+├── polynomial_interpolation.pdf             # Report on the results
+├── requirements.txt                         # Python packages needed
 └── README.md
 ```
 
-## How to run
-
-1. Download the project and open a terminal in its folder:
-
-   ```bash
-   git clone https://github.com/YOUR_USERNAME/Interpolation.git
-   cd Interpolation
-   ```
-
-2. Install the packages (`numpy` and `matplotlib`):
-
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-3. Run the program:
-
-   ```bash
-   python main.py
-   ```
-
-## Author
+# Author
 
 **Otmane Belkhair**, Master's student at INPT
 
-For educational use.
